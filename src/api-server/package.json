@@ -1,0 +1,19 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "Api server inventory item",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/api-server/app.js",
+    "start-dev": "nodemon ./src/api-server/app.js"
+  },
+  "author": "KasperNeth",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
