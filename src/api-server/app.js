@@ -19,7 +19,7 @@ const requestHandler = ((req, res) => {
     createItem(req, res)
 
    //getting parameter from the url using match method,split and regular expression
-  }else if (req.url.match(/\/api\/v1\/items\/([^\/]+)/) && req.method === "PUT"){
+  }else if (req.url.match(/\/api\/v1\/items\/([^\/]+)/) && req.method === "PATCH"){
     const id = req.url.split("/")[4];
     updateItem(req, res, id)
 

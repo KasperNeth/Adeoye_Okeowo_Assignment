@@ -12,9 +12,9 @@ const validateItem = (item, allowedKeys, res) => {
     res.writeHead(400).end(
       JSON.stringify({ msg: `unaccepted input field: ${invalidItem.join(", ")}` })
     );
-    return false; // when for allowed keys validation failed
+    return false; // when  allowed keys validation failed
   } else if (typeof item.Name !== "string" || typeof item.Price !== "number" || typeof item.Size !== "string") {
-    res.writeHead(400).end(JSON.stringify({ msg: "Invalid body field" }));
+    res.writeHead(400).end(JSON.stringify({ msg: "Invalid value field" }));
     return false; //return when validation failed and send back msg to the user
   }
   return true; //return when validation passed
@@ -59,8 +59,35 @@ const writeFileFunction =((items, res, resCode=200, resMsg="successful")=> {
 
 })
 
+const updateItemValidation = (item, allowedBodys, res) => {
+  const invalidItem = Object.keys(item).filter(key => !allowedBodys.includes(key));
+  if (invalidItem.length > 0) {
+    res.writeHead(400).end(
+      JSON.stringify({ msg: `unaccepted input field.Must start with capital letter: ${invalidItem.join(", ")}` })
+    );
+    return false; 
+  }
+  if(item.Name !== undefined && typeof item.Name !== "string"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Name"}))
+    return false;
+  }
+  if(item.Price !== undefined && typeof item.Price !== "number"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Price"}))
+    return false;
+  }
+  if(item.Size !== undefined && typeof item.Size !== "string"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Size"}))
+    return false;
+  }
+  return true;
+
+}
+
+
+
 module.exports = {
   validateItem,
   readFileFunction,
-  writeFileFunction
+  writeFileFunction,
+  updateItemValidation
 }

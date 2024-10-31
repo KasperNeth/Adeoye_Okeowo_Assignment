@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const {validateItem,readFileFunction, writeFileFunction} = require("./helper-functions")
+const {validateItem,readFileFunction, writeFileFunction, updateItemValidation} = require("./helper-functions")
 
 
 const itemDataBaseFilePath = path.join(__dirname, "../database", "items.json")
@@ -39,7 +39,7 @@ const getOneItem = ((req, res, id) => {
     if(!findItem){
       return res.writeHead(404).end(JSON.stringify({msg: "Item Not Found"}))
     }
-    return res.writeHead(200).end(JSON.stringify({msg: "found Item", findItem}))
+    return res.writeHead(200).end(JSON.stringify({msg: "Item Found Successfully", findItem}))
 
 
   })
@@ -55,10 +55,12 @@ const createItem = ((req, res) => {
 
   req.on("end", (() =>{
     parsedItem = Buffer.concat(body).toString();
+    console.log(parsedItem)
     let newItem = JSON.parse(parsedItem);
     //allowed field when creating a new body to avoid sending unknown data to database
-    const allowedKeys = ["Name", "Price", "size"]; 
+    const allowedKeys = ["Name", "Price", "Size"];
 
+     //validate the body
     if (!validateItem(newItem, allowedKeys, res)) return;
 
      
@@ -107,6 +109,13 @@ const updateItem = ((req, res,id) => {
     
     let itemId = parsedId;
     itemId = updateItem.id;
+    //allowed field when creating a new body to avoid sending unknown data to database
+    const allowedBodys = ["Name", "Price", "Size", "id"];
+
+     //validate the item
+    if (!updateItemValidation(updateItem, allowedBodys, res)) return;
+
+
 
 
     readFileFunction(itemId, res, (({items, findItem}) =>{
