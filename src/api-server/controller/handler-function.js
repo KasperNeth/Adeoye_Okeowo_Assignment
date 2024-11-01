@@ -74,15 +74,13 @@ const createItem = ((req, res) => {
       const lastId = items.length > 0 ? items[items.length -1].id : 0;
       newItem.id = lastId + 1;
 
-      const updatedItem = [...items, newItem];
+      const updateItems= [...items, newItem];
+
+  
+    writeFileFunction(updateItems, res, 201, "Item Created Successfully",({newItem}))
       
   
-      fs.writeFile(itemDataBaseFilePath, JSON.stringify(updatedItem), ((err) => {
-        if(err){
-          return res.writeHead(500).end(JSON.stringify({msg: "Unable to save item"}))
-        }
-        return res.writeHead(201).end(JSON.stringify({msg: "Item Created Successfully", newItem}));
-      }))
+
 
 
     }))
@@ -105,24 +103,27 @@ const updateItem = ((req, res,id) => {
   }))
   req.on("end", (() =>{
     const parsedItem =Buffer.concat(body)
-    let updateItem = JSON.parse(parsedItem)
+    let updatedItem = JSON.parse(parsedItem)
     
     let itemId = parsedId;
-    itemId = updateItem.id;
+
+    // itemId = updateItem.id;
     //allowed field when creating a new body to avoid sending unknown data to database
     const allowedBodys = ["Name", "Price", "Size", "id"];
 
      //validate the item
-    if (!updateItemValidation(updateItem, allowedBodys, res)) return;
+    if (!updateItemValidation(updatedItem, allowedBodys,itemId, res)) return;
 
 
 
 
-    readFileFunction(itemId, res, (({items, findItem}) =>{
-      items[findItem] = {...items[findItem], ...updateItem};
+    readFileFunction(itemId, res, (({updateItems, findItem}) =>{
+      
+      updateItems[findItem] = {...updateItems[findItem], ...updatedItem};
       // items[findItem] = updatedItem
+      console.log(updateItems)
 
-    writeFileFunction(items, res, undefined,"Item Updated Successfully")
+    writeFileFunction(updateItems, res, undefined,"Item Updated Successfully",({updatedItem}))
     }))
 
   
@@ -144,10 +145,10 @@ const deleteItem = ((req, res, id) => {
      return res.writeHead(400).end(JSON.stringify({msg: "Bad Request Invalid id"}));
   }
 
-  readFileFunction((parsedId), res, (({items, findItem}) =>{
-    items.splice(findItem, 1);
+  readFileFunction((parsedId), res, (({updateItems, findItem}) =>{
+    updateItems.splice(findItem, 1);
   
-  writeFileFunction(items, res,undefined, "Item Deleted Successfully")
+  writeFileFunction(updateItems, res,undefined, "Item Deleted Successfully")
   }))
 
 

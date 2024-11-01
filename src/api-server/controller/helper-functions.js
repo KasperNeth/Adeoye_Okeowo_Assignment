@@ -29,15 +29,18 @@ const readFileFunction = ((itemId, res, callBackFun) =>{
       return res.writeHead(500).end(JSON.stringify({msg: "Error Fetching Data"}));
 
     }
-    const items = JSON.parse(getItems);
+    //parse the data from the database
+    const updateItems = JSON.parse(getItems);
     //search for the index in database
-    const findItem = items.findIndex(((item) => item.id === itemId))
+    const findItem = updateItems.findIndex(((item) => item.id === itemId))
 
     if(findItem === -1){
       return res.writeHead(404).end(JSON.stringify({msg: "item Not Found"}))
     }
-    let item = items[findItem];
-    callBackFun({item, findItem, items})
+    //return the item and the index
+    updateItems[findItem];
+    
+    callBackFun({findItem, updateItems})
 
   }))
 
@@ -47,36 +50,50 @@ const readFileFunction = ((itemId, res, callBackFun) =>{
 
 
 //writeFile controller function
-const writeFileFunction =((items, res, resCode=200, resMsg="successful")=> {
-  fs.writeFile(itemDataBaseFilePath, JSON.stringify(items), ((err) => {
+const writeFileFunction =((updateItems, res, resCode=200, resMsg="successful",returnItem)=> {
+  fs.writeFile(itemDataBaseFilePath, JSON.stringify(updateItems), ((err) => {
     if(err){
       return res.writeHead(500).end(JSON.stringify({msg: "Unable to save data"}));
     }
     console.log(resCode)
-    return res.writeHead(resCode).end(JSON.stringify({msg: resMsg}));
+    return res.writeHead(resCode).end(JSON.stringify({msg: resMsg, returnItem}));
   }))
 
 
 })
 
-const updateItemValidation = (item, allowedBodys, res) => {
-  const invalidItem = Object.keys(item).filter(key => !allowedBodys.includes(key));
+const updateItemValidation = (updatedItem, allowedBodys, itemId, res) => {
+  const invalidItem = Object.keys(updatedItem).filter(body => !allowedBodys.includes(body));
+  console.log(invalidItem)
   if (invalidItem.length > 0) {
     res.writeHead(400).end(
       JSON.stringify({ msg: `unaccepted input field.Must start with capital letter: ${invalidItem.join(", ")}` })
     );
     return false; 
   }
-  if(item.Name !== undefined && typeof item.Name !== "string"){
-    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Name"}))
+  if(updatedItem.Name !== undefined && typeof updatedItem.Name !== "string"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Name must be a string"}))
     return false;
   }
-  if(item.Price !== undefined && typeof item.Price !== "number"){
-    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Price"}))
+  if(updatedItem.Price !== undefined && typeof updatedItem.Price !== "number"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Price must be a number"}))
     return false;
   }
-  if(item.Size !== undefined && typeof item.Size !== "string"){
-    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Size"}))
+  if(updatedItem.Size !== undefined && typeof updatedItem.Size !== "string"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Size must be a string"}))
+    return false;
+  }
+   
+  if (!updatedItem.id || updatedItem.id !== itemId) {
+    res.writeHead(400).end(JSON.stringify({ msg: "Bad Request: ID must be parse in body and must match URL ID" }));
+    return false;
+  }
+
+  const updateFields = Object.keys(updatedItem).filter(body => body !== "id" && allowedBodys.includes(body));
+
+ 
+  if (updateFields.length === 0) {
+    res.writeHead(400).end(JSON.stringify({ msg: "Valid update properties not provided" }));
     return false;
   }
   return true;
