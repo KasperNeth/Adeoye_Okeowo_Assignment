@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const {validateItem,readFileFunction, writeFileFunction, updateItemValidation} = require("./helper-functions")
+const {readFileFunction, writeFileFunction} = require("./helper-functions");
+const {validateItem, updateItemValidation} = require("./validation");
 
 
 const itemDataBaseFilePath = path.join(__dirname, "../database", "items.json")
