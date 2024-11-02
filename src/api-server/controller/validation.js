@@ -55,9 +55,18 @@ const validateItem = (item, allowedKeys, res) => {
       JSON.stringify({ msg: `unaccepted input field: ${invalidItem.join(", ")}` })
     );
     return false; // when  allowed keys validation failed
-  } else if (typeof item.Name !== "string" || typeof item.Price !== "number" || typeof item.Size !== "string") {
-    res.writeHead(400).end(JSON.stringify({ msg: "Invalid value field" }));
-    return false; //return when validation failed and send back msg to the user
+  } 
+   if(item.Name !== undefined && typeof item.Name !== "string"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Name must be a string"}))
+    return false;
+  }
+  if(item.Price !== undefined && typeof item.Price !== "number"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Price must be a number"}))
+    return false;
+  }
+  if(item.Size !== undefined && typeof item.Size !== "string"){
+    res.writeHead(400).end(JSON.stringify({msg: "Invalid value field: Size must be a string"}))
+    return false;
   }
   
   return true; //return when validation passed
