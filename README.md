@@ -49,6 +49,32 @@ npm start
 ```
 The server will start on port `3000` and you can access the server by visiting `http://localhost:3000` in your browser.
 
+## Api endpoints
+The following are the api endpoints for the second assignment
+get all items
+```bash
+GET /items
+```
+get a single item
+```bash
+GET /items/:id
+```
+add a new item
+```bash
+POST /items
+```
+update an item
+```bash
+PATCH /items/:id
+```
+All the endpoints are prefixed with `/api/v1` e.g `http://localhost:3000/api/v1/items`
+### Note
+The `PATCH` request method `id` must be parsed on the url as a parameter e.g `http://localhost:3000/api/v1/items/1` and the `id` must be parsed along side the request body  e.g `{ "Name": "new name", "id": 1}` and the `id` must be the same as the `id` parsed on the url. 
+
+The `POST` request method does not require the `id` to be parsed on the url, the `id` is generated automatically.
+
+The `DELETE` request method `id` must be parsed on the url as a parameter only e.g `http://localhost:3000/api/v1/items/1` .
+
 
 
 
