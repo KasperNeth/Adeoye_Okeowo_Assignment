@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path")
 
 
-
+//Path to the database file
 const itemDataBaseFilePath = path.join(__dirname, "../database", "items.json")
 
 
@@ -11,10 +11,10 @@ const itemDataBaseFilePath = path.join(__dirname, "../database", "items.json")
 const readFileFunction = ((itemId, res, callBackFun) =>{
   fs.readFile(itemDataBaseFilePath, "utf8", ((err, getItems) => {
     if(err){
-      return res.writeHead(500).end(JSON.stringify({msg: "Error Fetching Data"}));
+      return res.writeHead(500).end(JSON.stringify({msg: "Internal Server Error: Error Fetching Data"}));
 
     }
-    //parse the data from the database
+  
     const updateItems = JSON.parse(getItems);
     //search for the index in database
     const findItem = updateItems.findIndex(((item) => item.id === itemId))
@@ -38,9 +38,8 @@ const readFileFunction = ((itemId, res, callBackFun) =>{
 const writeFileFunction =((updateItems, res, resCode=200, resMsg="successful",returnItem)=> {
   fs.writeFile(itemDataBaseFilePath, JSON.stringify(updateItems), ((err) => {
     if(err){
-      return res.writeHead(500).end(JSON.stringify({msg: "Unable to save data"}));
+      return res.writeHead(500).end(JSON.stringify({msg: "Internal Server Error: Unable to save data"}));
     }
-    console.log(resCode)
     return res.writeHead(resCode).end(JSON.stringify({msg: resMsg, returnItem}));
   }))
 

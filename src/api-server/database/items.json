@@ -1,1 +1,75 @@
-[{"Name":"Chicken breast","Price":5.99,"Size":"","id":1},{"Name":"Cheeseburger","Price":1.99,"Size":"","id":2},{"Name":"Pair of socks","Price":2.77,"Size":"","id":3},{"Name":"Pair of Pants/Jeans","Price":20.77,"Size":"","id":4},{"Name":"Cooking Pot","Price":30.99,"Size":"","id":5},{"Name":"Set of 4 plates","Price":5.99,"Size":"","id":6},{"Name":"Deep freezer","Price":50.99,"size":"","id":7},{"Name":"Pair of Tshirt","Price":90.99,"Size":"","id":8},{"Name":"Tv set","Price":150.99,"Size":"","id":9},{"Name":"Iphone 16","Price":119.68,"Size":"66","id":10},{"Name":"tv","Price":89,"Size":"xl","id":11},{"Name":"love","Price":77,"Size":"66","id":12},{"Name":"love","Price":77,"Size":"66","id":13}]
+[
+  {
+    "Name": "Chicken breast",
+    "Price": 5.99,
+    "Size": "small(1kg)",
+    "id": 1
+  },
+  {
+    "Name": "Cheeseburger",
+    "Price": 1.99,
+    "Size": " large(l)",
+    "id": 2
+  },
+  {
+    "Name": "Pair of socks",
+    "Price": 2.77,
+    "Size": "small(s)",
+    "id": 3
+  },
+  {
+    "Name": "Pair of Pants/Jeans",
+    "Price": 20.77,
+    "Size": " large(l)",
+    "id": 4
+  },
+  {
+    "Name": "Cooking Pot",
+    "Price": 30.99,
+    "Size": "medium(m)",
+    "id": 5
+  },
+  {
+    "Name": "Set of 4 plates",
+    "Price": 5.99,
+    "Size": "medium(m)",
+    "id": 6
+  },
+  {
+    "Name": "Deep freezer",
+    "Price": 50.99,
+    "size": " large(l)",
+    "id": 7
+  },
+  {
+    "Name": "Pair of Tshirt",
+    "Price": 90.99,
+    "Size": "medium(m)",
+    "id": 8
+  },
+  {
+    "Name": "Tv set",
+    "Price": 150.99,
+    "Size": " large(l)",
+    "id": 9
+  },
+  {
+    "Name": "Iphone 16",
+    "Price": 119.68,
+    "Size": "small(s)",
+    "id": 10
+  },
+  {
+    "Name": "tv",
+    "Price": 89.99,
+    "Size": "medium(m)",
+    "id": 11
+  },
+  {
+    "Name": "HP Laptop", 
+    "Price": 1000.99,
+    "Size": "small(s)",
+    "id": 12
+  }
+
+]
