@@ -31,6 +31,10 @@ To run the first assignment `html-server` run the following command
 ```bash
 cd src/html-server
 ```
+Install the dependencies by running the following command
+```bash
+npm install
+```
 Then run the following command to start the server
 ```bash
 npm start
@@ -43,6 +47,11 @@ To run the second assignment, `api-server`  run the following command
 ```bash
 cd src/api-server
 ```
+Install the dependencies by running the following command
+```bash
+npm install
+```
+
 Then run the following command to start the server
 ```bash
 npm start
